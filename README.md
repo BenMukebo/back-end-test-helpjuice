@@ -27,6 +27,13 @@ Hint: Because the search is real time, queries will be coming in segments, as li
   <summary>Tailwind css</summary>
 </ul>
 
+## Docs
+
+  <ul>
+    <li><a href="https://www.semrush.com/blog/google-trends/">What is Google Trends & How to Use It</a></li>
+   </ul>
+
+
 
  ## Demo link
   <ul>
