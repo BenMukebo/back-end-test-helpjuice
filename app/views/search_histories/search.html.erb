@@ -1,0 +1,62 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center">
+   <h1 class="font-bold text-4xl">Realtime Search Analytics</h1>
+  </div>
+
+  <%= @query %>
+  <%= @ip_address %>
+
+  <%= form_with url: "/search", method: :get do |form| %>
+    <div class="flex items-end gap-2 my-5">
+      <div class="grow">
+        <%= form.label :query, "Search for:" %>
+        <%= form.search_field :query, id: "search-input", placeholder: "search...", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2.5 mt-2 w-full" %>
+      </div>
+      
+      <div class="inline">
+        <%= form.submit "Search", class: "rounded-lg py-2.5 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+    </div>
+
+    <div id="loader" class="my-5" style="display: none">
+        <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<%= javascript_tag do %>
+  const searchInput = document.getElementById('search-input');
+  console.log('asdweruiou', searchInput);
+  const loader = document.getElementById('loader');
+  console.log('loader', loader);
+
+  const debounce = (fn, duration) => {
+    let timer = null;
+    return function (...args) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      timer = setTimeout(() => {
+        fn.apply(this, args);
+        timer = null;
+      }, duration);
+    }
+  }
+
+  const onInputChange = async (event) => {
+    console.log(event.target.value);
+    loader.style.display = "block";
+    const query = event.target.value;
+    const url = `/search?query=${query}`;
+    loader.style.display = "none";
+  }
+
+  searchInput.addEventListener('input', debounce(onInputChange, 1000));
+<% end %>

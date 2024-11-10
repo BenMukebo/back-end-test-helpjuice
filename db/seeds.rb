@@ -7,3 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+(1..20).each do |article|
+  Article.create!(title: Faker::Lorem.sentence(word_count: 3), text: Faker::Lorem.paragraph(sentence_count: 3), status: "draft")
+end
